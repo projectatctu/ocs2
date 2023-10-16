@@ -45,7 +45,10 @@ void QuadrupedVisualizer::launchVisualizerNode(ros::NodeHandle& nodeHandle, std:
   currentFeetPosesPublisher_ = nodeHandle.advertise<geometry_msgs::PoseArray>("/ocs2_anymal/currentFeetPoses", 1);
   currentCollisionSpheresPublisher_ = nodeHandle.advertise<visualization_msgs::MarkerArray>("/ocs2_anymal/currentCollisionSpheres", 1);
 
-  quadrupedTfPublisher_.launchNode(nodeHandle, "ocs2_anymal_description", std::move(jointNames), std::move(baseName));
+  std::string descriptionName;
+  nodeHandle.getParam("/description_name", descriptionName);
+
+  quadrupedTfPublisher_.launchNode(nodeHandle, descriptionName, std::move(jointNames), std::move(baseName));
 }
 
 void QuadrupedVisualizer::update(const ocs2::SystemObservation& observation, const ocs2::PrimalSolution& primalSolution,
