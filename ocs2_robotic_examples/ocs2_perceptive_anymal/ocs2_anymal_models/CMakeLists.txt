@@ -51,6 +51,7 @@ add_library(${PROJECT_NAME}
   src/FrameDeclaration.cpp
   src/QuadrupedPinocchioMapping.cpp
   src/QuadrupedInverseKinematics.cpp
+  src/SpotInverseKinematics.cpp
   src/QuadrupedKinematics.cpp
   src/QuadrupedCom.cpp
 )

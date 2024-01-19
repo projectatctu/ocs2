@@ -1,4 +1,4 @@
-#include "ocs2_anymal_models/QuadrupedInverseKinematics.h"
+#include "ocs2_anymal_models/SpotInverseKinematics.h"
 
 // Pinocchio
 #include <pinocchio/algorithm/frames.hpp>
@@ -8,7 +8,7 @@
 
 namespace anymal {
 
-QuadrupedInverseKinematics::QuadrupedInverseKinematics(const FrameDeclaration& frameDeclaration,
+SpotInverseKinematics::SpotInverseKinematics(const FrameDeclaration& frameDeclaration,
                                                        const ocs2::PinocchioInterface& pinocchioInterface) {
   auto data = pinocchioInterface.getData();
   const auto& model = pinocchioInterface.getModel();
@@ -19,7 +19,7 @@ QuadrupedInverseKinematics::QuadrupedInverseKinematics(const FrameDeclaration& f
 
   for (size_t leg = 0; leg < switched_model::NUM_CONTACT_POINTS; ++leg) {
     if (frameDeclaration.legs[leg].joints.size() != 3) {
-      throw std::runtime_error("[QuadrupedInverseKinematics] analytical inverse kinematics only valid for 3 joints per leg");
+      throw std::runtime_error("[SpotInverseKinematics] analytical inverse kinematics only valid for 3 joints per leg");
     }
 
     const auto& hipTransform = data.oMf[QuadrupedPinocchioMapping::getBodyId(frameDeclaration.legs[leg].joints[0], pinocchioInterface)];
@@ -33,19 +33,19 @@ QuadrupedInverseKinematics::QuadrupedInverseKinematics(const FrameDeclaration& f
   }
 }
 
-QuadrupedInverseKinematics* QuadrupedInverseKinematics::clone() const {
-  return new QuadrupedInverseKinematics(*this);
+SpotInverseKinematics* SpotInverseKinematics::clone() const {
+  return new SpotInverseKinematics(*this);
 }
 
-switched_model::vector3_t QuadrupedInverseKinematics::getLimbJointPositionsFromPositionBaseToFootInBaseFrame(
+switched_model::vector3_t SpotInverseKinematics::getLimbJointPositionsFromPositionBaseToFootInBaseFrame(
     size_t footIndex, const switched_model::vector3_t& positionBaseToFootInBaseFrame) const {
   switched_model::vector3_t jointAngles{switched_model::vector3_t::Zero()};
-  switched_model::analytical_inverse_kinematics::anymal::getLimbJointPositionsFromPositionBaseToFootInBaseFrame(
+  switched_model::analytical_inverse_kinematics::spot::getLimbJointPositionsFromPositionBaseToFootInBaseFrame(
       jointAngles, positionBaseToFootInBaseFrame, parameters_[footIndex], footIndex);
   return jointAngles;
 }
 
-switched_model::vector3_t QuadrupedInverseKinematics::getLimbVelocitiesFromFootVelocityRelativeToBaseInBaseFrame(
+switched_model::vector3_t SpotInverseKinematics::getLimbVelocitiesFromFootVelocityRelativeToBaseInBaseFrame(
     size_t footIndex, const switched_model::vector3_t& footVelocityRelativeToBaseInBaseFrame, const joint_jacobian_block_t& jointJacobian,
     switched_model::scalar_t damping) const {
   // v = J * dq, (bottom 3 rows = translational part)

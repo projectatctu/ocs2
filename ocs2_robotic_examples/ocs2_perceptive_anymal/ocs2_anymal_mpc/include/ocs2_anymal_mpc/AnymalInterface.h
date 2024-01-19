@@ -17,6 +17,12 @@ std::unique_ptr<switched_model::QuadrupedInterface> getAnymalInterface(const std
                                                                        switched_model::QuadrupedInterface::Settings settings,
                                                                        const FrameDeclaration& frameDeclaration);
 
+std::unique_ptr<switched_model::QuadrupedInterface> getSpotInterface(const std::string& urdf, const std::string& taskFolder);
+
+std::unique_ptr<switched_model::QuadrupedInterface> getSpotInterface(const std::string& urdf,
+                                                                       switched_model::QuadrupedInterface::Settings settings,
+                                                                       const FrameDeclaration& frameDeclaration);
+
 std::string getConfigFolder(const std::string& configName);
 
 std::string getTaskFilePath(const std::string& configName);

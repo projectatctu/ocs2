@@ -10,6 +10,7 @@
 
 #include <ocs2_anymal_models/QuadrupedCom.h>
 #include <ocs2_anymal_models/QuadrupedInverseKinematics.h>
+#include <ocs2_anymal_models/SpotInverseKinematics.h>
 #include <ocs2_anymal_models/QuadrupedKinematics.h>
 
 #include <ocs2_anymal_models/package_path.h>
@@ -50,6 +51,12 @@ std::unique_ptr<switched_model::InverseKinematicsModelBase> getAnymalInverseKine
                                                                                        const std::string& urdf) {
   return std::unique_ptr<switched_model::InverseKinematicsModelBase>(
       new QuadrupedInverseKinematics(frameDeclaration, ocs2::getPinocchioInterfaceFromUrdfString(urdf)));
+}
+
+std::unique_ptr<switched_model::InverseKinematicsModelBase> getSpotInverseKinematics(const FrameDeclaration& frameDeclaration,
+                                                                                       const std::string& urdf) {
+  return std::unique_ptr<switched_model::InverseKinematicsModelBase>(
+      new SpotInverseKinematics(frameDeclaration, ocs2::getPinocchioInterfaceFromUrdfString(urdf)));
 }
 
 std::unique_ptr<switched_model::KinematicsModelBase<ocs2::scalar_t>> getAnymalKinematics(const FrameDeclaration& frameDeclaration,
