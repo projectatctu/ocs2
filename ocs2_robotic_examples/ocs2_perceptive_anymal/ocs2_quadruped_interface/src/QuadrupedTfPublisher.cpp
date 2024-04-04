@@ -44,8 +44,8 @@ void QuadrupedTfPublisher::publish(ros::Time timeStamp, const base_coordinate_t&
                                    const std::string& worldFrame) {
   if (robotStatePublisherPtr_ != nullptr && lastTimeStamp_ != timeStamp) {
     // Joint positions
-    updateJointPositions(jointPositions);
-    robotStatePublisherPtr_->publishTransforms(jointPositionsMap_, timeStamp, tfPrefix_);
+    // updateJointPositions(jointPositions);
+    // robotStatePublisherPtr_->publishTransforms(jointPositionsMap_, timeStamp, tfPrefix_);
 
     // Base positions
     updateBasePose(timeStamp, basePose, worldFrame);
